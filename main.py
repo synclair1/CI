@@ -4,7 +4,7 @@ from sudoku import Sudoku
 if __name__ == '__main__':
     board = Board()
     input = ""
-    inputBoard = board.generateBoard("easy")
+    inputBoard = board.generateBoard("hard")
     print("Board Generated")
     for x in inputBoard[0]:
         input += str(x)

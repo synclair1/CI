@@ -1,5 +1,4 @@
-
-
+from functools import cmp_to_key
 import numpy
 import random
 random.seed()
@@ -72,25 +71,27 @@ class Population(object):
         
     def sort(self):
         """ Sort the population based on fitness. """
-        self.candidates.sort(key=self.sort_fitness)
+        print(set([type(i) for i in self.candidates]))
+        # print(self.candidates)
+        self.candidates.sort(key=cmp_to_key(sort_fitness))
         return
 
-    def sort_fitness(x, y):
-        """ The sorting function. """
-        print(x)
-        if(x.candidates < y.candidates):
-            return 1
-        elif(x.candidates == y.candidates):
-            return 0
-        else:
-            return -1
+def sort_fitness(x, y):
+    """ The sorting function. """
+    
+    if(x.fitness < y.fitness):
+        return 1
+    elif(x.fitness == y.fitness):
+        return 0
+    else:
+        return -1
 
 
 class Candidate(object):
     """ A candidate solutions to the Sudoku puzzle. """
     def __init__(self):
         self.values = numpy.zeros((Nd, Nd), dtype=int)
-        self.fitness = None
+        self.fitness = -100000000000000000
         return
 
     def update_fitness(self):
@@ -297,7 +298,7 @@ class CycleCrossover(object):
         child_row1 = numpy.zeros(Nd)
         child_row2 = numpy.zeros(Nd)
 
-        remaining = range(1, Nd+1)
+        remaining = list(range(1, Nd+1))
         cycle = 0
         
         while((0 in child_row1) and (0 in child_row2)):  # While child rows not complete...
