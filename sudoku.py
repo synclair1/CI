@@ -77,9 +77,10 @@ class Population(object):
 
     def sort_fitness(x, y):
         """ The sorting function. """
-        if(x.fitness < y.fitness):
+        print(x)
+        if(x.candidates < y.candidates):
             return 1
-        elif(x.fitness == y.fitness):
+        elif(x.candidates == y.candidates):
             return 0
         else:
             return -1
