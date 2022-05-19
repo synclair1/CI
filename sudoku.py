@@ -72,10 +72,10 @@ class Population(object):
         
     def sort(self):
         """ Sort the population based on fitness. """
-        self.candidates.sort(self.sort_fitness)
+        self.candidates.sort(key=self.sort_fitness)
         return
 
-    def sort_fitness(self, x, y):
+    def sort_fitness(x, y):
         """ The sorting function. """
         if(x.fitness < y.fitness):
             return 1

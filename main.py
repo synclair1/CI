@@ -3,15 +3,15 @@ from sudoku import Sudoku
 
 if __name__ == '__main__':
     board = Board()
-    lst = ""
-    board_config = board.generateBoard("easy") # generates a medium level sudoku
+    input = ""
+    inputBoard = board.generateBoard("medium")
     print("Board Generated")
-    for x in board_config[0]:
-        lst += str(x)
-        lst += "\n"
+    for x in inputBoard[0]:
+        input += str(x)
+        input += "\n"
 
     with open('input.txt', 'w') as f:
-        f.write(lst)
+        f.write(input)
     
     s = Sudoku()
     s.load("input.txt")
