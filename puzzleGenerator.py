@@ -1,3 +1,4 @@
+# Code by: Haris Karim Ladhani & Synclair Saqib Samson
 # To create the sudoku puzzle, the following article was used https://medium.com/codex/building-a-sudoku-solver-and-generator-in-python-1-3-f29d3ede6b23
 import random
 import copy

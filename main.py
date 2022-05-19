@@ -1,3 +1,4 @@
+# Code by: Haris Karim Ladhani & Synclair Saqib Samson
 from puzzleGenerator import Board
 from sudoku import Sudoku
 
