@@ -14,7 +14,14 @@ class Board:
         else:
             self.code = None
 
-    def boardToCode(self, board=None):
+    def generateBoard(self, difficulty):
+        self.board, solutionBoard = self.boardDifficulty(self.randomBoard(), difficulty)
+        return self.codedBoard(), self.codedBoard(solutionBoard)
+
+    def resetBoard(self):
+        self.board = [[0] * 9 for _ in range(9)]
+
+    def codedBoard(self, board=None):
         if board:
             return ''.join([str(i) for j in board for i in j])
         else:
@@ -60,35 +67,20 @@ class Board:
                 counter += 1
         return self.board, newBoard
 
-    def generateBoard(self, difficulty):
-        self.board, solutionBoard = self.boardDifficulty(self.randomBoard(), difficulty)
-        return self.boardToCode(), self.boardToCode(solutionBoard)
-
-    def resetBoard(self):
-        self.board = [[0] * 9 for _ in range(9)]
-
-    def randomBoard(self): # generates a brand new completely random board full of numbers
+    def randomBoard(self):
         self.resetBoard()
-        _l = list(range(1, 10))
-        for row in range(3):
-            for col in range(3):
-                _num = random.choice(_l)
-                self.board[row][col] = _num
-                _l.remove(_num)
-        
-        _l = list(range(1, 10))
-        for row in range(3, 6):
-            for col in range(3, 6):
-                _num = random.choice(_l)
-                self.board[row][col] = _num
-                _l.remove(_num)
+        r1 = 0
+        r2 = 3
+        for x in range(3):
+            _l = list(range(1, 10))
+            for row in range(r1, r2):
+                for col in range(r1, r2):
+                    _num = random.choice(_l)
+                    self.board[row][col] = _num
+                    _l.remove(_num)
+            r1 += 3
+            r2 += 3
 
-        _l = list(range(1, 10))
-        for row in range(6, 9):
-            for col in range(6, 9):
-                _num = random.choice(_l)
-                self.board[row][col] = _num
-                _l.remove(_num)
         return self.generateCont()
     
     def generateCont(self):
@@ -117,13 +109,10 @@ class Board:
         for row in range(len(self.board)):
             if self.board[row][space[1]] == num:
                 return False
-        
-        miniGridRow = space[0] // 3
-        miniGridCol = space[1] // 3
 
         for i in range(3):
             for j in range(3):
-                if self.board[(miniGridRow * 3) + i][(miniGridCol * 3) + j] == num:
+                if self.board[(space[0] // 3 * 3) + i][(space[1] // 3 * 3) + j] == num:
                     return False
         return True
 
@@ -138,7 +127,7 @@ class Board:
             boardCopy = copy.deepcopy(self)
             row, col = self.findSpaceSolution(boardCopy.board, i)
             boardSolution = boardCopy.solveNumberSolution(row, col)
-            solutions.append(self.boardToCode(boardSolution))
+            solutions.append(self.codedBoard(boardSolution))
         return list(set(solutions))
 
     def findSpaceSolution(self, board, num):
